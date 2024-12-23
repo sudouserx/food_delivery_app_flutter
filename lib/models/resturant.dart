@@ -1,4 +1,6 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery/models/cart_item.dart';
 
 import 'food.dart';
 
@@ -324,16 +326,78 @@ class Resturant with ChangeNotifier {
 
   // operations
 
-  // add to cart
+  // user cart
+  final List<CartItem> _cart = [];
 
-  // remove from cart
+  // add to cart
+  void addToCart(Food food, List<Addon> selectedAddons) {
+    // return CartItem(food: food, selectedAddons: selectedAddons);
+
+    // find if the selected item already exists , if so .. just add the quantity
+    CartItem? cartItem = _cart.firstWhereOrNull((item) {
+      // check if the food is the same
+      bool isSameFood = item.food == food;
+
+      // check if the selected addons are the same
+      bool isSameAddons =
+          ListEquality().equals(item.selectedAddons, selectedAddons);
+
+      return isSameFood && isSameAddons;
+    });
+
+    // if item is already in the cart , increase the quantity
+    if (cartItem != null) {
+      cartItem.quantity++;
+    } else {
+      // add new cart item
+      _cart.add(CartItem(
+        food: food,
+        selectedAddons: selectedAddons,
+      ));
+    }
+    notifyListeners(); // to update the ui
+  }
+
+  // remove from cart (i.e decrease the quantity )
+  void removeFromCart(CartItem cartItem) {
+    int cartIndex = _cart.indexOf(cartItem);
+
+    if (cartIndex != -1) {
+      if (_cart[cartIndex].quantity > 1) {
+        _cart[cartIndex].quantity--;
+      } else {
+        _cart.removeAt(cartIndex);
+      }
+    }
+    notifyListeners();
+  }
 
   // get total price of cart
+  double getTotalPrice() {
+    // different logic implemented : check at 1:00:43
+    double totalPrice = 0.0;
+    totalPrice =
+        _cart.fold(0, (sum, item) => sum + (item.quantity * item.totalPrice));
+
+    return totalPrice;
+  }
 
   // get total number of items in cart
+  int getTotalItemCount() {
+    int totalItemCount = 0;
+
+    for (CartItem cartItem in _cart) {
+      totalItemCount += cartItem.quantity;
+    }
+
+    return totalItemCount;
+  }
 
   // clear cart
-
+  void clearCart() {
+    _cart.clear();
+    notifyListeners();
+  }
 
   // helpers
 
@@ -342,7 +406,4 @@ class Resturant with ChangeNotifier {
   // format double value into money
 
   // format list of addons into a string summary
-
-
-
 }
