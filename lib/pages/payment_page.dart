@@ -81,6 +81,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
           // credit card form
           CreditCardForm(
+              themeColor: Colors.black87,
               cardNumber: cardNumber,
               expiryDate: expiryDate,
               cardHolderName: cardHolderName,
