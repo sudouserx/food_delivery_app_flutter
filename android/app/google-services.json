@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "282573344516",
+    "project_id": "gursha-63b7b",
+    "storage_bucket": "gursha-63b7b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282573344516:android:b012056436352aaed58a51",
+        "android_client_info": {
+          "package_name": "com.example.fooddelivery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHuExdE3v48Ka3SOyK2JqvzojgC2Op-ZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,7 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"> Add your package name here
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.fooddelivery"> <!-- Add your package name here -->
     <application
-        android:label="food_delivery"
+        android:label="fooddelivery"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

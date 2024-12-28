@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery/components/my_drawer_tile.dart';
+import 'package:food_delivery/services/auth/auth_service.dart';
 
 import '../pages/settings_page.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
+
+  void logout() async {
+    final _authService = AuthService();
+    await _authService.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +53,7 @@ class MyDrawer extends StatelessWidget {
 
           Spacer(), // fill the whole space ( with nothing ), to create gap
           // logout list tile
-          MyDrawerTile(text: "L O G O U T", icon: Icons.logout, onTap: () {}),
+          MyDrawerTile(text: "L O G O U T", icon: Icons.logout, onTap: logout),
 
           const SizedBox(
             height: 25.0,
