@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/models/resturant.dart';
+import 'package:provider/provider.dart';
 
 class MyCurrentLocation extends StatelessWidget {
-  const MyCurrentLocation({super.key});
+  final TextEditingController textController = TextEditingController();
+  MyCurrentLocation({super.key});
 
   void openLocationSearchBox(BuildContext context) {
     showDialog(
@@ -9,18 +12,31 @@ class MyCurrentLocation extends StatelessWidget {
         builder: (context) => AlertDialog(
               title: Text("Your location"),
               content: TextField(
+                controller: textController,
                 decoration: const InputDecoration(
-                  hintText: 'Search address..',
+                  hintText: 'Enter address..',
                 ),
               ),
               actions: [
                 // cancel button
-                MaterialButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel'),),
+                MaterialButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    textController.clear();
+                  },
+                  child: const Text('Cancel'),
+                ),
 
                 // save button
-                MaterialButton(onPressed: () => Navigator.pop(context), child: const Text('Save'),)
-
-
+                MaterialButton(
+                  onPressed: () {
+                    String newAddress = textController.text;
+                    context.read<Resturant>().changeDeliveryAddress(newAddress);
+                    Navigator.pop(context);
+                    textController.clear();
+                  },
+                  child: const Text('Save'),
+                )
               ],
             ));
   }
@@ -41,11 +57,13 @@ class MyCurrentLocation extends StatelessWidget {
             child: Row(
               children: [
                 //address
-                Text(
-                  'Rajiv Gandi Salai , 603103',
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                      fontWeight: FontWeight.bold),
+                Consumer<Resturant>(
+                  builder: (context, resturant, child) => Text(
+                    resturant.deliveryAddress,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
 
                 // drop down menu
